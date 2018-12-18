@@ -1,0 +1,27 @@
+{
+  "name": "kipp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brittonjason/kipp.git"
+  },
+  "author": "Jason Britton",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/brittonjason/kipp/issues"
+  },
+  "homepage": "https://github.com/brittonjason/kipp#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "socket.io": "^2.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.9"
+  }
+}

@@ -8,8 +8,14 @@ class Player {
   }
 
   update() {
-    this.x += this.dx;
-    this.y += this.dy;
+    if (document.hasFocus()) {
+      this.x += this.dx;
+      this.y += this.dy;
+    }
+    else {
+      this.dx = 0;
+      this.dy = 0;
+    }
   }
 
   draw() {

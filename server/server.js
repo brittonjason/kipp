@@ -2,6 +2,7 @@ let express = require('express');
 let app = express();
 let server = require('http').Server(app);
 let io = require('socket.io')(server);
+let world = require('./world');
 
 server.listen(process.env.PORT || 3000, listen);
 
@@ -30,7 +31,7 @@ io.on('connection', function(socket) {
   socket.on('start', data => {
     players.push(new Player(data.id, data.x, data.y));
     console.log(players);
-    io.sockets.emit('update', players);
+    socket.emit('world', world);
   })
 
   socket.on('update', data => {
@@ -41,7 +42,6 @@ io.on('connection', function(socket) {
       }
     });
     io.sockets.emit('update', players);
-    console.log(players);
   });
 
   socket.on('disconnect', () => {

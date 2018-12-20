@@ -1,6 +1,7 @@
 let socket;
 let player;
 let players = [];
+let world;
 
 function keyPressed() {
   switch (keyCode) {
@@ -50,27 +51,19 @@ function setup() {
     socket.emit('start', data);
     updatePlayer();
 
+    socket.on('world', data => world = data);
+
     socket.on('update', data => {
       players = data;
-      console.log(players);
     });
   });
 }
 
 function draw() {
   background(0);
-  
-  push();
-  translate(width/2-player.x, height/2-player.y);
-  players.forEach(otherPlayer => {
-    if (otherPlayer.id !== player.id) {
-      fill(0, 255, 0);
-      ellipse(otherPlayer.x, otherPlayer.y, 20);
-      fill(255, 0, 0);
-    }
-  });
-  pop();
 
+  drawWorld();  
+  drawOtherPlayers();
   player.update();
   player.draw();
 
@@ -86,6 +79,39 @@ function updatePlayer() {
     y: player.y
   }
   socket.emit('update', data);
+}
+
+function drawWorld() {
+  if (!world) return;
+
+  noStroke();
+  fill(140);
+
+  push();
+  translate(width/2-player.x, height/2-player.y);
+  world.forEach(shape => {    
+    beginShape();
+    shape.forEach(v => {
+      vertex(v.x, v.y);
+    });
+    vertex(shape[0].x, shape[0].y);
+    endShape();
+  });
+  pop();
+}
+
+function drawOtherPlayers() {
+  noStroke();
+  fill(0, 255, 0);
+
+  push();
+  translate(width/2-player.x, height/2-player.y);
+  players.forEach(otherPlayer => {
+    if (otherPlayer.id !== player.id) {      
+      ellipse(otherPlayer.x, otherPlayer.y, 20);
+    }
+  });
+  pop();
 }
 
 function windowResized() {

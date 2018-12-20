@@ -41,6 +41,7 @@ io.on('connection', function(socket) {
       }
     });
     io.sockets.emit('update', players);
+    console.log(players);
   });
 
   socket.on('disconnect', () => {

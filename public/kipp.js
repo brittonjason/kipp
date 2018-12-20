@@ -39,7 +39,7 @@ function keyReleased() {
 function setup() {
   createCanvas(windowWidth, windowHeight);
   socket = io.connect('http://localhost:3000');
-  player = new Player(width/2, height/2);
+  player = new Player(100, 100);
   socket.on('connected', () => {
     player.id = socket.id;
     let data = {
@@ -59,10 +59,20 @@ function setup() {
 
 function draw() {
   background(0);
-  player.update();
-  players.forEach(player => {
-    ellipse(player.x, player.y, 20);
+  
+  push();
+  translate(width/2-player.x, height/2-player.y);
+  players.forEach(otherPlayer => {
+    if (otherPlayer.id !== player.id) {
+      fill(0, 255, 0);
+      ellipse(otherPlayer.x, otherPlayer.y, 20);
+      fill(255, 0, 0);
+    }
   });
+  pop();
+
+  player.update();
+  player.draw();
 
   if (player.dx !== 0 || player.dy !== 0) {
     updatePlayer();

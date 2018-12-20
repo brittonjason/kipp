@@ -19,6 +19,10 @@ class Player {
   }
 
   draw() {
-    ellipse(this.x, this.y, 20);
+    push();
+    translate(width/2, height/2);
+    fill(255);
+    ellipse(0, 0, 20);
+    pop();
   }
 }

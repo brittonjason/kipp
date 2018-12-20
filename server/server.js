@@ -11,7 +11,7 @@ function listen() {
   console.log('App listening at http://' + host + ':' + port);
 }
 
-app.use(express.static('public'));
+app.use(express.static('../public'));
 
 class Player {
   constructor(id, x, y) {
